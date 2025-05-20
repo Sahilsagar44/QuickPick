@@ -1,32 +1,29 @@
-import { View, Image, StyleSheet, Text, ImageBackground, SafeAreaView, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import Svg from 'react-native-svg';
+import { myColors } from '../Utils/MyColors';
 
-// const CustomCarrot = () => (
-//   <Svg width="64" height="64" viewBox="0 0 64 64">
-//     {/* Leaves */}
-//     <Path
-//       d="M32 4C34 0 40 0 38 6C36 12 30 10 32 4Z"
-//       fill="green"
-//     />
-//     <Path
-//       d="M28 6C30 0 36 2 34 8C32 14 26 12 28 6Z"
-//       fill="green"
-//     />
-//     {/* Carrot Body */}
-//     <Path
-//       d="M26 12L38 60L30 62L20 18Z"
-//       fill="orange"
-//     />
-//   </Svg>
-// );
- 
 
-const Signup = () => {
-
+const Signup = ({ navigation }) => {
   const [secure, setSecure] = useState(true);
-  const [email,setEmail]=useState(true);
+  const [email, setEmail] = useState('');
+  const [isValid, setIsValid] = useState(false);
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+    const emailRegex = /\S+@\S+\.\S+/;
+    setIsValid(emailRegex.test(text));
+  };
 
   return (
     <SafeAreaView style={Styles.safeArea}>
@@ -45,34 +42,71 @@ const Signup = () => {
         </View>
 
         <View style={Styles.inputcontainer}>
-          <Text style={Styles.subheading}>Username</Text>
+          <Text style={[Styles.subheading]}>Username</Text>
           <TextInput
-            style={Styles.txtinput}
-            keyboardType='name-phone-pad'
-            maxLength={9}>
-          </TextInput>
-          <Text style={Styles.subheading}>Email</Text>
-          <TextInput
-            style={Styles.txtinput}
-            keyboardType='email-address'>
-          </TextInput>
-          <Text style={Styles.subheading}>Password</Text>
+            style={[Styles.inputWrapper, { paddingVertical: 18 }]}
+            keyboardType="name-phone-pad"
+            maxLength={9}
+          />
+
+          <Text style={[Styles.subheading, { paddingTop: 20 }]}>Email</Text>
+          <View style={Styles.inputWrapper}>
+            <TextInput
+              placeholder="Enter your email"
+              value={email}
+              onChangeText={handleEmailChange}
+              keyboardType="email-address"
+              style={{ flex: 1, fontSize: 16, color: 'black' }}
+            />
+            {email.length > 0 && (
+              <MaterialIcons
+                name="check-circle"
+                size={24}
+                color={isValid ? 'green' : 'gray'}
+                style={Styles.icon}
+              />
+            )}
+          </View>
+
+          <Text style={[Styles.subheading, { paddingTop: 20 }]}>Password</Text>
           <View style={Styles.inputWrapper}>
             <TextInput
               secureTextEntry={secure}
-              keyboardType='ascii-capable'
-              style={{ flex: 1, fontSize: 16, paddingVertical: 8,width:'90%',color:'black', }} >
-
-            </TextInput>
+              keyboardType="ascii-capable"
+              style={{
+                flex: 1,
+                fontSize: 16,
+                paddingVertical: 8,
+                color: 'black',
+              }}
+            />
             <TouchableOpacity onPress={() => setSecure(!secure)}>
               <MaterialIcons
                 name={secure ? 'visibility-off' : 'visibility'}
                 size={24}
-                color="grey" />
+                color="grey"
+              />
             </TouchableOpacity>
           </View>
+          <Text style={[Styles.subheading, { margin: 10 }]}>By continuing you agree to our privacy policy and
+            <TouchableOpacity><Text style={{ color: 'green' }}>Terms of Service</Text></TouchableOpacity>.</Text>
         </View>
+        <View>
+          <TouchableOpacity
+            title="Learn More"
+            style={Styles.button1}
+            onPress={() => navigation.navigate('Signin')}>
+            <Text style={{ color: myColors.secondary, fontStyle: 'italic', fontSize: 17 }}>Sign Up</Text>
+          </TouchableOpacity>
 
+          <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'center' }}>
+            <Text>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+              <Text style={{ color: myColors.primary }}>Sign in</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -83,12 +117,20 @@ const Styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fcfcfc',
   },
+  button1: {
+    backgroundColor: myColors.primary,
+    padding: 15,
+    paddingLeft: '20%',
+    paddingRight: '20%',
+    margin: 'auto',
+    borderRadius: 15
+  },
   scrollContent: {
     paddingBottom: 20,
   },
   inputcontainer: {
     paddingTop: 40,
-    marginLeft: 15
+    marginLeft: 15,
   },
   txt: {
     fontStyle: 'italic',
@@ -125,16 +167,6 @@ const Styles = StyleSheet.create({
     paddingTop: 4,
     color: 'grey',
   },
-  txtinput: {
-    borderBottomWidth: 2,
-    borderColor: '#e2e2e2',
-    marginBottom: 30,
-    fontsize: 14,
-    width: '95%',
-    lineHeight: 25,
-    letterSpacing: 0.7,
-    color: 'black'
-  },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,7 +174,11 @@ const Styles = StyleSheet.create({
     borderBottomColor: '#e2e2e2',
     paddingHorizontal: 8,
     paddingVertical: 4,
-    width:'95%'
+    width: '95%',
+    color: 'black'
+  },
+  icon: {
+    marginLeft: 8,
   },
 });
 
