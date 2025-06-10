@@ -95,13 +95,13 @@ const Signup = ({ navigation }) => {
           <TouchableOpacity
             title="Learn More"
             style={Styles.button1}
-            onPress={() => navigation.navigate('Signin')}>
+            onPress={() => navigation.navigate('Login')}>
             <Text style={{ color: myColors.secondary, fontStyle: 'italic', fontSize: 17 }}>Sign Up</Text>
           </TouchableOpacity>
 
           <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'center' }}>
             <Text>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={{ color: myColors.primary }}>Sign in</Text>
             </TouchableOpacity>
           </View>

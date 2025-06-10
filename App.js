@@ -6,6 +6,7 @@ import Login from './src/Screens/Login';
 import Signin from './src/Screens/Signin';
 import Ongoing from './src/Screens/Ongoing';
 import Signup from './src/Screens/Signup';
+import Home from './src/Screens/StoreScreens/Home';
 // import CustomCarrot from './src/Components/CustomCarrot';
 
 const Stack = createNativeStackNavigator("");
@@ -14,7 +15,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Splash" component={Splash} />
@@ -22,7 +23,7 @@ const App = () => {
         <Stack.Screen name="Signin" component={Signin} />
         <Stack.Screen name="Ongoing" component={Ongoing}/>
         <Stack.Screen name="Signup" component={Signup}/>
-        {/* <Stack.Screen name="CustomCarrot" component={CustomCarrot}/> */}
+        <Stack.Screen name="Home" component={Home}/>
         
       </Stack.Navigator>
     </NavigationContainer>
